@@ -26,18 +26,17 @@ export const Filters = ({
   return (
     <div className="mb-6 flex flex-col lg:flex-row gap-4 items-center justify-between">
       <div className="w-full lg:w-1/3">
-        <div className="flex flex-col">
+	<div className="flex flex-col">
           <span className="text-[10px] opacity-60 mb-0.5">Search</span>
-        <input
-          type="text"
-          placeholder="Search transcripts, agents, IDs..."
-          value={search}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className={`w-full px-4 py-2 rounded-xl text-sm border outline-none transition-all ${theme.search}`}
-        />
-        </div>
-      </div>
-
+          <input
+             type="text"
+             placeholder="Search transcripts, agents, IDs..."
+             value={search}
+             onChange={(e) => onSearchChange(e.target.value)}
+             className={`w-full px-4 py-2 rounded-xl text-sm border outline-none transition-all ${theme.search}`}
+          />
+       </div>
+     </div>
       <div className="w-full lg:w-auto flex flex-wrap items-center gap-4">
         <div className="flex flex-col">
           <span className="text-[10px] opacity-60 mb-0.5">Outcome</span>
@@ -53,7 +52,6 @@ export const Filters = ({
             <option value="no_answer">No Answer</option>
           </select>
         </div>
-
         <div className="flex items-center gap-2">
           <div className="flex flex-col">
             <span className="text-[10px] opacity-60 mb-0.5">Min (sec)</span>
@@ -71,7 +69,7 @@ export const Filters = ({
             />
           </div>
 
-          <span className="text-xs mt-5">-</span>
+          <span className="text-xs opacity-40 mt-5">-</span>
 
           <div className="flex flex-col">
             <span className="text-[10px] opacity-60 mb-0.5">Max (sec)</span>
@@ -90,6 +88,7 @@ export const Filters = ({
           </div>
         </div>
 
+        {/* Reset Button aligned with the bottom of the input boxes */}
         <button
           onClick={onClear}
           className="px-3.5 py-2 text-xs font-medium rounded-xl border border-red-500/30 text-red-500 hover:bg-red-500/10 transition-colors self-end mb-[1px]"

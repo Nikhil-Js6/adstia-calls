@@ -14,17 +14,21 @@ export default function App() {
   const [isDark, setIsDark] = useState(false)
   const [selected, setSelected] = useState<Call | null>(null)
 
-  // state from URL Search Parameters for refresh persistence
+  // Initialize state from URL Search Parameters for refresh persistence
   const queryParams = new URLSearchParams(window.location.search)
   const [search, setSearch] = useState(queryParams.get("search") || "")
   const [selectedOutcome, setSelectedOutcome] = useState(queryParams.get("outcome") || "ALL")
   const [minDuration, setMinDuration] = useState(queryParams.get("minDur") || "")
   const [maxDuration, setMaxDuration] = useState(queryParams.get("maxDur") || "")
   
-  // Sorting & Pagination States
+  // Sorting & Pagination States initialized from URL
   const [sortField, setSortField] = useState<string | null>(queryParams.get("sort") || null)
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>((queryParams.get("dir") as 'asc' | 'desc') || 'asc')
-  const [currentPage, setCurrentPage] = useState(Number(queryParams.get("page")) || 1)
+  
+  const [currentPage, setCurrentPage] = useState(() => {
+    const pageParam = queryParams.get("page")
+    return pageParam ? Math.max(1, Number(pageParam)) : 1
+  })
 
   const theme = getTheme(isDark)
   const dummyCalls = callsData as unknown as Call[]
@@ -96,10 +100,26 @@ export default function App() {
     setCurrentPage(1);
   };
 
-  // Reset to page 1 on filter change
-  useEffect(() => {
+  // Controlled Filter Handlers with explicit Page 1 resets
+  const handleSearchChange = (val: string) => {
+    setSearch(val)
     setCurrentPage(1)
-  }, [search, selectedOutcome, minDuration, maxDuration])
+  }
+
+  const handleOutcomeChange = (val: string) => {
+    setSelectedOutcome(val)
+    setCurrentPage(1)
+  }
+
+  const handleMinDurationChange = (val: string) => {
+    setMinDuration(val)
+    setCurrentPage(1)
+  }
+
+  const handleMaxDurationChange = (val: string) => {
+    setMaxDuration(val)
+    setCurrentPage(1)
+  }
 
   // Pagination over sorted and filtered data
   const totalPages = Math.ceil(sortedCalls.length / ITEMS_PER_PAGE)
@@ -114,6 +134,7 @@ export default function App() {
     setMinDuration("")
     setMaxDuration("")
     setSortField(null)
+    setCurrentPage(1)
   }
 
   return (
@@ -124,13 +145,13 @@ export default function App() {
         <Filters
           theme={theme}
           search={search}
-          onSearchChange={setSearch}
+          onSearchChange={handleSearchChange}
           selectedOutcome={selectedOutcome}
-          onOutcomeChange={setSelectedOutcome}
+          onOutcomeChange={handleOutcomeChange}
           minDuration={minDuration}
-          onMinDurationChange={setMinDuration}
+          onMinDurationChange={handleMinDurationChange}
           maxDuration={maxDuration}
-          onMaxDurationChange={setMaxDuration}
+          onMaxDurationChange={handleMaxDurationChange}
           onClear={handleClearFilters}
         />
 

@@ -36,7 +36,7 @@ export const SummaryStrip = ({ calls, theme, isDark }: Props) => {
   }
 
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 px-5 py-2 rounded-2xl border backdrop-blur-sm ${theme.card}`}>
+    <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-5 rounded-2xl border backdrop-blur-sm ${theme.card}`}>
       <div className="flex flex-col justify-center p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5">
         <span className="text-[11px] uppercase tracking-wider font-semibold opacity-70 mb-1">
           Total Filtered Calls
@@ -56,7 +56,7 @@ export const SummaryStrip = ({ calls, theme, isDark }: Props) => {
           Outcome Breakdown
         </span>
         <div className="flex flex-wrap gap-2">
-          { Object.entries(breakdown).map(([outcome, count]) => (
+          {Object.entries(breakdown).map(([outcome, count]) => (
             <span 
               key={outcome} 
               className={`text-xs px-2.5 py-1 rounded-lg border font-medium flex items-center gap-1.5 ${
@@ -70,7 +70,7 @@ export const SummaryStrip = ({ calls, theme, isDark }: Props) => {
               </span>
             </span>
           ))}
-          { Object.keys(breakdown).length === 0 && (
+          {Object.keys(breakdown).length === 0 && (
             <span className="text-xs opacity-50">No records available</span>
           )}
         </div>
