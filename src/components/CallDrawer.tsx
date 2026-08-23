@@ -1,5 +1,6 @@
 import type { Call } from "../types/calls"
 import { formatDuration } from "../utils/formatters"
+import { OutcomeBadge } from "./OutcomeBadge" // Adjust path if needed
 
 type CallDrawerProps = {
   open: boolean
@@ -20,6 +21,29 @@ export const CallDrawer = ({ open, onClose, call, theme, isDark }: CallDrawerPro
 
   const sentimentInfo = getSentimentInfo(call.sentiment)
 
+  // Function to format and highlight transcript speakers nicely
+  const renderFormattedTranscript = (text: string) => {
+    return text.split("\n").map((line, index) => {
+      const isAgent = line.toLowerCase().startsWith("agent:")
+      const isCustomer = line.toLowerCase().startsWith("customer:") || line.toLowerCase().startsWith("user:")
+
+      return (
+        <div 
+          key={index} 
+          className={`my-2 p-3 rounded-xl border text-xs sm:text-sm leading-relaxed transition-all ${
+            isAgent 
+              ? (isDark ? "bg-[#1E1B32]/60 border-[#7C3AED]/30 text-purple-100" : "bg-[#F5F3FF] border-[#DDD6FE] text-[#581c87]") 
+              : isCustomer
+              ? (isDark ? "bg-white/[0.03] border-white/10 text-zinc-200" : "bg-black/[0.02] border-black/10 text-zinc-800")
+              : "opacity-80"
+          }`}
+        >
+          {line}
+        </div>
+      )
+    })
+  }
+
   return (
     <>
       {/* Backdrop */}
@@ -29,7 +53,7 @@ export const CallDrawer = ({ open, onClose, call, theme, isDark }: CallDrawerPro
       />
 
       {/* Drawer */}
-      <div className={`fixed right-0 top-0 z-50 h-full w-full max-w-md border-l shadow-2xl flex flex-col ${isDark ? "bg-[#0F0E1A] border-white/10 text-white" : "bg-white border-black/10 text-slate-900"}`}>
+      <div className={`fixed right-0 top-0 z-50 h-full w-full max-w-lg border-l shadow-2xl flex flex-col ${isDark ? "bg-[#0F0E1A] border-white/10 text-white" : "bg-white border-black/10 text-slate-900"}`}>
         
         {/* Header */}
         <div className={`px-6 py-5 border-b flex justify-between items-center ${theme.th}`}>
@@ -37,7 +61,10 @@ export const CallDrawer = ({ open, onClose, call, theme, isDark }: CallDrawerPro
             <p className="text-[11px] font-semibold tracking-widest opacity-60 mb-1">
               CALL DETAIL • {call.id}
             </p>
-            <h2 className="text-lg font-bold">{call.agent}</h2>
+            <div className="flex items-center gap-3 mt-1">
+              <h2 className="text-lg font-bold">{call.agent}</h2>
+              <OutcomeBadge outcome={call.outcome} isDark={isDark} />
+            </div>
           </div>
           <button 
             onClick={onClose} 
@@ -66,11 +93,11 @@ export const CallDrawer = ({ open, onClose, call, theme, isDark }: CallDrawerPro
             </div>
           </div>
 
-          {/* Full Transcript Display */}
+          {/* Full Transcript Display with Highlighted Speaker Cards */}
           <div className={`rounded-xl border p-4 ${theme.card}`}>
             <p className="text-[11px] font-semibold opacity-60 tracking-widest mb-3">TRANSCRIPT</p>
-            <div className="text-sm leading-relaxed whitespace-pre-wrap font-sans opacity-90">
-              {call.transcript}
+            <div className="space-y-1">
+              {renderFormattedTranscript(call.transcript)}
             </div>
           </div>
 

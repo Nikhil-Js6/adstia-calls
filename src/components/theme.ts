@@ -8,8 +8,8 @@ export const getTheme = (isDark: boolean) => isDark
     tableWrap: "bg-white/[0.02] border-white/10 ",
     search: "bg-white/[0.07] border-white/10 text-white placeholder:text-zinc-500 focus:border-[#7C3AED]",
     dropdown: "bg-[#1E1B32] border-white/10 text-white",
-    prev: "border-white/10 text-white bg-[#151328] hover:bg-white/5",
-    next: "border-white/10 text-white bg-[#151328] hover:bg-white/5",
+    prev: "border-white/10 text-zinc-200 bg-[#151328] hover:bg-white/10 transition-colors",
+    next: "border-white/10 text-zinc-200 bg-[#151328] hover:bg-white/10 transition-colors",
     footer: "bg-[#0B0A14] border-white/10 text-zinc-200",
 } : {
     bg: "bg-[#FCFAFF] text-black",
@@ -19,7 +19,7 @@ export const getTheme = (isDark: boolean) => isDark
     card: "bg-white border-black/15 shadow-sm border-l-2 border-l-[#7C3AED]",
     search: "bg-white border-black/30 text-black focus:border-[#7C3AED] focus:ring-4 focus:ring-[#EDE9FE]",
     dropdown: "bg-white border-black/20 text-black",
-    prev: "border-black/10 bg-[#7C3AED] text-white hover:bg-black/5",
-    next: "border-black/10 bg-[#7C3AED] text-white hover:bg-black/5",
+    prev: "border-purple-200 bg-[#F5F3FF] text-[#6D28D9] hover:bg-[#EDE9FE] transition-colors",
+    next: "border-purple-200 bg-[#F5F3FF] text-[#6D28D9] hover:bg-[#EDE9FE] transition-colors",
     footer: "bg-black border-black/30 text-zinc-300",
 }
