@@ -4,6 +4,6 @@ export interface Call {
     duration: number;
     timestamp: string;
     outcome: string;
-    sentiment: number | null;
+    sentiment: number;
     transcript: string;
 }

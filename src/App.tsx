@@ -5,18 +5,9 @@ import { Filters } from "./components/Filters"
 import { CallTable } from "./components/CallTable"
 import { CallDrawer } from "./components/CallDrawer"
 import callsData from "./data/calls.json"
+import type { Call } from "./types/calls"
 
-export type Call = {
-  id: string
-  agent: string
-  duration: string | number
-  timestamp: string
-  outcome: "qualified" | "rejected" | "callback" | "no_answer"
-  sentiment: number
-  transcript: string
-}
-
-const ITEMS_PER_PAGE = 15; // You can change this deliberate page size
+const ITEMS_PER_PAGE = 15; 
 
 export default function App() {
   const [isDark, setIsDark] = useState(false)
@@ -66,7 +57,7 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen ${theme.bg}`}>
+    <div className={`min-h-screen flex flex-col ${theme.bg}`}>
       <Header theme={theme} isDark={isDark} setIsDark={setIsDark} totalCount={filteredCalls.length} />
 
       <Filters
@@ -96,7 +87,7 @@ export default function App() {
               <button
                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 disabled={currentPage === 1}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${isDark ? 'border-white/10 text-white hover:bg-white/5' : 'border-black/10 text-black hover:bg-black/5'}`}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${theme.prev}`}
               >
                 {'< Previous'}
               </button>
@@ -108,7 +99,7 @@ export default function App() {
               <button
                 onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${isDark ? 'border-white/10 text-white hover:bg-white/5' : 'border-black/10 text-black hover:bg-black/5'}`}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${theme.next}`}
               >
                 {'Next >'}
               </button>

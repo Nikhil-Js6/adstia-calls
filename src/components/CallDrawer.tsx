@@ -1,4 +1,5 @@
-import type { Call } from "../App"
+import type { Call } from "../types/calls"
+import { formatDuration } from "../utils/formatters"
 
 type CallDrawerProps = {
   open: boolean
@@ -53,7 +54,7 @@ export const CallDrawer = ({ open, onClose, call, theme, isDark }: CallDrawerPro
           <div className="grid grid-cols-2 gap-3">
             <div className={`rounded-xl border p-4 ${theme.card}`}>
               <p className="text-[11px] font-semibold opacity-60 tracking-widest">DURATION</p>
-              <p className="text-lg font-bold mt-1 font-mono">{call.duration}s</p>
+              <p className="text-lg font-bold mt-1 font-mono">{formatDuration(call.duration)}</p>
             </div>
             
             <div className={`rounded-xl border p-4 ${theme.card}`}>
